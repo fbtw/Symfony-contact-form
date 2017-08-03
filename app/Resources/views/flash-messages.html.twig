@@ -1,0 +1,19 @@
+{% for label, flashes in app.session.flashbag.all %}
+    {% for message in flashes %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{#% block flash_messages %}
+    {% for type, messages in app.session.flashBag.all() %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+
+                {{ msg }}
+
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %#}
