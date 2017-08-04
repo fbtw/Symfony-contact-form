@@ -2,18 +2,29 @@
 # https://symfony.com/doc/current/security.html
 security:
 
-    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    admin:
+                        password: $2y$13$2nyWov6dKLhjYqU6W9s4Qu196wImplf8f7bfiDA2AIcWaSfWAx/cu
+                        roles: 'ROLE_ADMIN'
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
+            pattern: ^/
+            provider: in_memory
+            form_login:
+                login_path: login
+                check_path: login
+            logout: true
             anonymous: ~
             # activate different ways to authenticate
 
