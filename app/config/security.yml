@@ -11,7 +11,7 @@ security:
             memory:
                 users:
                     admin:
-                        password: $2y$13$2nyWov6dKLhjYqU6W9s4Qu196wImplf8f7bfiDA2AIcWaSfWAx/cu
+                        password: $2y$13$2nyWov6dKLhjYqU6W9s4Qu196wImplf8f7bfiDA2AIcWaSfWAx/cu #asd
                         roles: 'ROLE_ADMIN'
 
     firewalls:

@@ -65,4 +65,5 @@ class SupController extends Controller
         return $this->redirectToRoute('homepage');
 
     }
+
 }

@@ -11,7 +11,19 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+    <div class="container">
+
+        {% include('flash-messages.html.twig') %}
+
+        {% if app.user %}
+            <a href="{{ logout_path('main') }}">salir</a>
+            {% else %}
+
+        {% endif %}
         {% block body %}{% endblock %}
+
+    </div>
+
         {% block javascripts %}
             <script src="{{ ('http://code.jquery.com/jquery.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
