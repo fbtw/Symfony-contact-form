@@ -2,5 +2,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% include('flash-messages.html.twig') %}
     {{ form(registrar) }}
 {% endblock %}

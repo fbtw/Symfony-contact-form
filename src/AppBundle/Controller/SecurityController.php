@@ -12,9 +12,7 @@ class SecurityController extends Controller
      */
     public function loginAction()
     {
-        return $this->render('security/login.html.twig',[
-
-        ]);
+        return $this->render('security/login.html.twig',[]);
     }
 
 

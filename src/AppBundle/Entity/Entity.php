@@ -3,13 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * entity
- *
- * @ORM\Table(name="entity")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\entityRepository")
+ * @ORM\Table(name="entity")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class Entity implements UserInterface, \Serializable
 {
@@ -150,29 +153,37 @@ class Entity implements UserInterface, \Serializable
 
     public function serialize()
     {
-        // TODO: Implement serialize() method.
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+        ]);
     }
 
     public function unserialize($serialized)
     {
-        // TODO: Implement unserialize() method.
-    }
-
-    public function getRoles()
-    {
-        // TODO: Implement getRoles() method.
+        list (
+            $this->id,
+            $this->username,
+            $this->password
+            ) = unserialize($serialized);
     }
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+        return null;
     }
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
-
+    public function getRoles()
+    {
+        return [
+            'ROLE_USER',
+        ];
+    }
 
 }
 

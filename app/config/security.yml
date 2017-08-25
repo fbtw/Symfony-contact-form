@@ -1,27 +1,40 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER]
 
     encoders:
         Symfony\Component\Security\Core\User\User:
             algorithm: bcrypt
+        AppBundle\Entity\Entity:
+            algorithm: bcrypt
 
     providers:
+        chain_provider:
+            chain:
+                providers: [ in_memory, db_provider ]
         in_memory:
             memory:
                 users:
-                    admin:
-                        password: $2y$13$2nyWov6dKLhjYqU6W9s4Qu196wImplf8f7bfiDA2AIcWaSfWAx/cu #asd
-                        roles: 'ROLE_ADMIN'
+                    admin: {
+                        password: $2y$13$2nyWov6dKLhjYqU6W9s4Qu196wImplf8f7bfiDA2AIcWaSfWAx/cu,
+                        roles: 'ROLE_ADMIN'}
+        db_provider:
+            entity: {
+                class: AppBundle:Entity}
+                # property: username
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             pattern: ^/
-            provider: in_memory
+            provider: chain_provider
             form_login:
+                username_parameter: '_username'
                 login_path: login
                 check_path: login
             logout: true
@@ -33,3 +46,7 @@ security:
 
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+    access_control:
+        - { path: ^/registration-form-submission$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(login|register)$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: ROLE_USER }
